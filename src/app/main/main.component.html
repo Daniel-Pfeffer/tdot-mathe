@@ -1,0 +1,31 @@
+<mat-card class="formula">
+    <form autocomplete="off">
+        <h2 class="mat-primary">Willkommen zum Tag der Offenen Tür der HTBLA Leonding</h2>
+        <mat-form-field color="primary">
+            <input matInput placeholder="Name" [(ngModel)]="name" name="Name">
+        </mat-form-field>
+        <br><br><br>
+        <mat-form-field color="primary">
+            <input matInput placeholder="E-Mail" [(ngModel)]="mail" name="email" email="true"
+                   (input)="vm.changeContent('mail',$event)">
+            <mat-error *ngIf="vm.hasError('mail',emptyType)">
+                E-mail is required
+            </mat-error>
+            <mat-error *ngIf="vm.hasError('mail',emailType)">
+                Please enter valid E-mail
+            </mat-error>
+        </mat-form-field>
+        <br><br><br>
+        <mat-form-field color="primary">
+            <input matInput placeholder="Guess" [(ngModel)]="guess" name="guess">
+            <mat-error *ngIf="vm.hasError('guess',emptyType) && !vm.hasError('guess',numberType)">
+                Guess is required
+            </mat-error>
+            <mat-error *ngIf="vm.hasError('guess',numberType)">
+                Please enter a valid number
+            </mat-error>
+        </mat-form-field>
+        <br><br><br>
+        <button mat-button color="primary" (click)="check()">Absenden</button>
+    </form>
+</mat-card>
