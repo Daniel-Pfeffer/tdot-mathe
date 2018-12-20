@@ -7,22 +7,20 @@
         <br><br><br>
         <mat-form-field color="primary">
             <input matInput placeholder="E-Mail" [(ngModel)]="mail" name="email" email="true"
-                   (input)="vm.changeContent('mail',$event)">
+                   (input)="vm.changeContent('mail',$event)" required>
             <mat-error *ngIf="vm.hasError('mail',emptyType)">
                 E-mail is required
             </mat-error>
-            <mat-error *ngIf="vm.hasError('mail',emailType)">
+            <mat-error *ngIf="vm.hasError('mail',emailType) && !vm.hasError('mail',emptyType)">
                 Please enter valid E-mail
             </mat-error>
         </mat-form-field>
         <br><br><br>
         <mat-form-field color="primary">
-            <input matInput placeholder="Guess" [(ngModel)]="guess" name="guess">
-            <mat-error *ngIf="vm.hasError('guess',emptyType) && !vm.hasError('guess',numberType)">
+            <input matInput placeholder="Guess" [(ngModel)]="guess" name="guess" required
+                   (input)="vm.changeContent('guess',$event)">
+            <mat-error *ngIf="vm.hasError('guess',emptyType)">
                 Guess is required
-            </mat-error>
-            <mat-error *ngIf="vm.hasError('guess',numberType)">
-                Please enter a valid number
             </mat-error>
         </mat-form-field>
         <br><br><br>

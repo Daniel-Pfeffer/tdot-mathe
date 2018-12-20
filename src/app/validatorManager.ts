@@ -1,6 +1,7 @@
 // nicer validator
 export class ValidatorManager {
     private readonly valList: Validator[];
+    private readonly regexNumber = new RegExp(/^[0-9]+$/);
 
     constructor() {
         this.valList = [];
@@ -8,7 +9,6 @@ export class ValidatorManager {
 
     public hasError(validatorName: string, errorType: ValidatorEnum): boolean {
         const val = this.get(validatorName);
-        console.log(`${val.name} with ${errorType}: ${val.hasError(errorType)}`);
         return val.hasError(errorType);
     }
 
@@ -23,7 +23,21 @@ export class ValidatorManager {
 
     public changeContent(validatorName: string, event: Event) {
         const validator = this.get(validatorName);
-        validator.content = event.target['value'];
+        const value = event.target['value'];
+        if (validator.hasErrorInList(ValidatorEnum.number)) {
+            if (this.regexNumber.test(value)) {
+                validator.content = value;
+            } else {
+                if (value.toString().length == 0) {
+                    validator.content = value;
+                } else {
+                    event.target['value'] = validator.content;
+                }
+
+            }
+        } else {
+            validator.content = event.target['value'];
+        }
     }
 
     public get(validatorName: String) {
@@ -36,17 +50,28 @@ export class ValidatorManager {
 }
 
 class Validator {
-    private errorList: ValidatorEnum[];
+    private readonly errorList: ValidatorEnum[];
     name: string;
     content: string;
 
 
     constructor(activateError: ValidatorEnum[], validatorName: string) {
         this.errorList = activateError;
+        this.content = '';
         if (validatorName.length === 0) {
             throw new Error('Validator needs a name');
         }
         this.name = validatorName;
+    }
+
+    hasErrorInList(errorToSearch: ValidatorEnum): boolean {
+        for (const item of this.errorList) {
+            console.log(item.toString());
+            if (item === errorToSearch) {
+                return true;
+            }
+        }
+        return false;
     }
 
     hasError(error: ValidatorEnum): boolean {
@@ -71,10 +96,10 @@ class Validator {
     Master of suppression
  */
 export enum ValidatorEnum {
-    // @ts-ignore^
-    empty = 'empty',
     // @ts-ignore
     email = new RegExp(/^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/),
     // @ts-ignore
-    number = new RegExp(/^[0-9]+$/)
+    number = new RegExp(/^[0-9]+$/),
+    // @ts-ignore
+    empty = new RegExp(/^$/)
 }
