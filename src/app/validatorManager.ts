@@ -28,7 +28,7 @@ export class ValidatorManager {
             if (this.regexNumber.test(value)) {
                 validator.content = value;
             } else {
-                if (value.toString().length == 0) {
+                if (value.toString().length === 0) {
                     validator.content = value;
                 } else {
                     event.target['value'] = validator.content;
