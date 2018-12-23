@@ -9,3 +9,7 @@ body {
     font-family: Roboto, "Helvetica Neue", sans-serif;
     background-color: #424242;
 }
+
+.error-snackbar {
+    background-color: darkred !important;
+}

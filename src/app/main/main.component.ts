@@ -47,7 +47,7 @@ export class MainComponent {
                 this.errorResponse = 'Email already used';
             }
         } else {
-            if (this.guess < 1 && this.maximumNumber < this.guess) {
+            if (this.guess < 1 && this.maximumNumber < this.guess && Math.floor(this.guess) !== this.guess) {
                 this.errorResponse = 'Number not valid';
             }
             if (!mailReg.test(this.mail)) {
@@ -61,7 +61,7 @@ export class MainComponent {
 
     openSnackBar(message: string) {
         this.snackBar.open(message, 'OK', {
-
+            panelClass: ['error-snackbar']
         });
     }
 }
