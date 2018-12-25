@@ -8,7 +8,6 @@ import {MaterialModule} from './material/material.module';
 
 import {StatsComponent} from './stats/stats.component';
 import {AppRoutingModule} from './app-routing.module';
-import {AdminComponent} from './admin/admin.component';
 import {MainComponent} from './main/main.component';
 import {RestService} from './rest.service';
 import {HttpClientModule} from '@angular/common/http';
@@ -18,7 +17,6 @@ import {HttpClientModule} from '@angular/common/http';
     declarations: [
         AppComponent,
         StatsComponent,
-        AdminComponent,
         MainComponent
     ],
     imports: [

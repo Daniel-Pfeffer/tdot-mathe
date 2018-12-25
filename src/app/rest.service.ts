@@ -11,14 +11,15 @@ export class RestService {
     }
 
     getData() {
-        this.http.get('localhost:8080/tdot/getAll');
+        return this.http.get('http://localhost:8080/tdot/getAll');
     }
 
     addGuess(person: Person) {
-        this.http.put('locahost:8080/tdot/addGuess', person);
+        console.log('hi\nAdded a person: ' + person);
+        return this.http.post('http://localhost:8080/tdot/addGuess', person);
     }
 
-    getSpecificPerson(mail: string) {
-        return this.http.post('localhost:8080/tdot/getPerson', mail);
+    getSpecificPerson(personToGet: Person) {
+        return this.http.post('http://localhost:8080/tdot/getPerson', personToGet);
     }
 }

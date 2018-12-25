@@ -2,3 +2,10 @@
     width: 50%;
     margin: auto;
 }
+
+.button_right_inCard {
+    right: 10px;
+    left: auto;
+    position: absolute;
+    font-size: large;
+}

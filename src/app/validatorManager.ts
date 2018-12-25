@@ -66,7 +66,6 @@ class Validator {
 
     hasErrorInList(errorToSearch: ValidatorEnum): boolean {
         for (const item of this.errorList) {
-            console.log(item.toString());
             if (item === errorToSearch) {
                 return true;
             }
