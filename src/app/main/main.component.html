@@ -1,35 +1,38 @@
 <mat-card class="formula">
     <form autocomplete="off">
-        <h2 class="mat-primary">Willkommen zum Tag der Offenen Tür der HTBLA Leonding</h2>
-        <mat-form-field color="primary">
-            <input matInput placeholder="Name" [(ngModel)]="name" name="Name" required>
-            <mat-error>
-                Name is required
-            </mat-error>
-        </mat-form-field>
-        <br><br><br>
-        <mat-form-field color="primary">
-            <input matInput placeholder="E-Mail" [(ngModel)]="mail" name="email" email="true"
-                   (input)="vm.changeContent('mail',$event)" required>
-            <mat-error *ngIf="!vm.hasError('mail',emailType)">
-                E-mail is required
-            </mat-error>
-            <mat-error *ngIf="vm.hasError('mail',emailType) && !vm.hasError('mail',emptyType)">
-                Please enter valid E-mail
-            </mat-error>
-        </mat-form-field>
-        <br><br><br>
-        <mat-form-field color="primary">
-            <input matInput placeholder="Guess" [(ngModel)]="guess" name="guess" required
-                   (input)="vm.changeContent('guess',$event)">
-            <mat-error>
-                Guess is required
-            </mat-error>
-        </mat-form-field>
-        <br><br><br>
-        <button mat-button color="primary" style="font-size: large" (click)="check()">Absenden</button>
-        <button mat-button color="primary"
-                routerLink="stats" class="button_right_inCard">Stats
-        </button>
+        <h2 class="heading">Willkommen zum Tag der Offenen Tür der HTBLA Leonding</h2>
+        <div class="content">
+            <mat-form-field color="primary">
+                <input matInput placeholder="Name" [(ngModel)]="name" name="Name" required>
+                <mat-error>
+                    Name is required
+                </mat-error>
+            </mat-form-field>
+            <br>
+            <mat-form-field color="secondary">
+                <input matInput placeholder="E-Mail" [(ngModel)]="mail" name="email" email="true" (input)="vm.changeContent('mail',$event)"
+                    required>
+                <mat-error *ngIf="!vm.hasError('mail',emailType)">
+                    E-mail is required
+                </mat-error>
+                <mat-error *ngIf="vm.hasError('mail',emailType) && !vm.hasError('mail',emptyType)">
+                    Please enter valid E-mail
+                </mat-error>
+            </mat-form-field>
+            <br>
+            <mat-form-field color="primary">
+                <input matInput placeholder="Guess" [(ngModel)]="guess" name="guess" required (input)="vm.changeContent('guess',$event)">
+                <mat-error>
+                    Guess is required
+                </mat-error>
+            </mat-form-field>
+        </div>
+
+        <div class="buttons">
+            <button mat-button color="primary" style="font-size: large" (click)="check()">Absenden</button>
+            <button mat-button color="primary" routerLink="stats" class="button_right_inCard">Stats
+            </button>
+
+        </div>
     </form>
 </mat-card>
