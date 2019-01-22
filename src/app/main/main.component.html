@@ -10,8 +10,9 @@
             </mat-form-field>
             <br>
             <mat-form-field color="secondary">
-                <input matInput placeholder="E-Mail" [(ngModel)]="mail" name="email" email="true" (input)="vm.changeContent('mail',$event)"
-                    required>
+                <input matInput placeholder="E-Mail" [(ngModel)]="mail" name="email" email="true"
+                       (input)="vm.changeContent('mail',$event)"
+                       required>
                 <mat-error *ngIf="!vm.hasError('mail',emailType)">
                     E-mail is required
                 </mat-error>
@@ -21,7 +22,26 @@
             </mat-form-field>
             <br>
             <mat-form-field color="primary">
-                <input matInput placeholder="Guess" [(ngModel)]="guess" name="guess" required (input)="vm.changeContent('guess',$event)">
+                <input matInput placeholder="Guess" [(ngModel)]="guess" name="guess" required
+                       (input)="vm.changeContent('guess',$event)">
+                <mat-error>
+                    Guess is required
+                </mat-error>
+            </mat-form-field>
+            <br>
+            <mat-form-field color="primary">
+                <input matInput placeholder="Gummy bears" [(ngModel)]="guessGummy" name="guessGummy"
+                       required
+                       (input)="vm.changeContent('guessGummy',$event)">
+                <mat-error>
+                    Guess is required
+                </mat-error>
+            </mat-form-field>
+            <br>
+            <mat-form-field color="primary">
+                <input matInput placeholder="M&Ms" [(ngModel)]="guessMAndM" name="guessMAndM"
+                       required
+                       (input)="vm.changeContent('guessMAndM',$event)">
                 <mat-error>
                     Guess is required
                 </mat-error>

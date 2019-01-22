@@ -11,13 +11,15 @@ import {AppRoutingModule} from './app-routing.module';
 import {MainComponent} from './main/main.component';
 import {RestService} from './rest.service';
 import {HttpClientModule} from '@angular/common/http';
+import {DialogCompComponent} from './dialog-comp/dialog-comp.component';
 
 
 @NgModule({
     declarations: [
         AppComponent,
         StatsComponent,
-        MainComponent
+        MainComponent,
+        DialogCompComponent
     ],
     imports: [
         BrowserModule,
@@ -27,6 +29,9 @@ import {HttpClientModule} from '@angular/common/http';
         FormsModule,
         HttpClientModule,
         ReactiveFormsModule
+    ],
+    entryComponents: [
+        DialogCompComponent
     ],
     providers: [RestService],
     bootstrap: [AppComponent]

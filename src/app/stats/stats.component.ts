@@ -10,7 +10,7 @@ import {RestService} from '../rest.service';
 export class StatsComponent implements OnInit {
 
     persons: Array<Person>;
-    displayedColumns: string[] = ['name', 'mail', 'guess'];
+    displayedColumns: string[] = ['name', 'guess', 'guessGummybear', 'guessMandM'];
 
     constructor(private service: RestService) {
     }

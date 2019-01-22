@@ -2,7 +2,8 @@ import {Component} from '@angular/core';
 import {ValidatorEnum, ValidatorManager} from '../validatorManager';
 import {RestService} from '../rest.service';
 import {Person} from '../person';
-import {MatSnackBar} from '@angular/material';
+import {MatDialog, MatSnackBar} from '@angular/material';
+import {DialogCompComponent} from '../dialog-comp/dialog-comp.component';
 
 
 @Component({
@@ -14,9 +15,10 @@ export class MainComponent {
     // ngModels
     mail: string;
     name: string;
+    guessMAndM: number;
+    guessGummy: number;
     guess: number;
     errorResponse = '';
-    maximumNumber: number;
 
     // validator manager
     vm = new ValidatorManager();
@@ -25,13 +27,16 @@ export class MainComponent {
     emailType = ValidatorEnum.email;
     emptyType = ValidatorEnum.empty;
 
-    constructor(private service: RestService, public snackBar: MatSnackBar) {
+    constructor(private service: RestService, public snackBar: MatSnackBar, public dialog: MatDialog) {
         this.vm.add([ValidatorEnum.email, ValidatorEnum.empty], 'mail');
         this.vm.add([ValidatorEnum.number, ValidatorEnum.empty], 'guess');
+        this.vm.add([ValidatorEnum.number, ValidatorEnum.empty], 'guessGummy');
+        this.vm.add([ValidatorEnum.number, ValidatorEnum.empty], 'guessMAndM');
     }
 
     checkIfMailExists(person, p) {
         if (person == null) {
+            console.log(p);
             this.service.addGuess(p).subscribe();
         } else {
             this.errorResponse = 'Email already used';
@@ -50,28 +55,43 @@ export class MainComponent {
         if (!numberReg.test(String(this.guess)) && this.guess !== undefined) {
             this.guess = Number(this.guess.toString().slice(0, this.guess.toString().length - 1));
         }
-        if (mailReg.test(this.mail) && numberReg.test('' + this.guess + '')) {
-            const p: Person = new Person(this.name, this.mail, this.guess);
-            let person: Person;
-            this.service.getSpecificPerson(p).subscribe(data => {
-                person = <Person>data;
-                this.checkIfMailExists(person, p);
-            });
-        } else {
-            if (this.guess !== undefined && this.name !== undefined && this.mail !== undefined) {
-                if (this.guess < 1 && this.maximumNumber < this.guess && Math.floor(this.guess) !== this.guess) {
-                    this.errorResponse = 'Number not valid';
-                }
-                if (!mailReg.test(this.mail)) {
-                    this.errorResponse = 'Email not valid';
-                }
+
+        const dialogRef = this.dialog.open(DialogCompComponent, {
+            width: '250px',
+            data: this.name
+        });
+        dialogRef.afterClosed().subscribe(item => {
+            if (mailReg.test(this.mail) && numberReg.test('' + this.guess + '')) {
+                const p: Person = new Person(this.name, this.mail, this.guess, this.guessGummy, this.guessMAndM);
+                let person: Person;
+                this.service.getSpecificPerson(p).subscribe(data => {
+                    person = <Person>data;
+                    this.checkIfMailExists(person, p);
+                });
             } else {
-                this.errorResponse = 'No inputs given';
+                if (this.guess !== undefined && this.name !== undefined && this.mail !== undefined && this.guessMAndM !== undefined && this.guessGummy !== undefined) {
+                    if ((this.guess < 1 && Math.floor(this.guess) !== this.guess) &&
+                        (this.guessGummy < 1 && Math.floor(this.guessGummy) !== this.guessGummy) &&
+                        (this.guessMAndM < 1 && Math.floor(this.guessMAndM) !== this.guessMAndM)) {
+                        this.errorResponse = 'Number not valid';
+                    }
+                    if (!mailReg.test(this.mail)) {
+                        this.errorResponse = 'Email not valid';
+                    }
+                } else {
+                    this.errorResponse = 'No inputs given';
+                }
             }
-        }
-        if (this.errorResponse.length !== 0) {
-            this.openSnackBar(this.errorResponse);
-        }
+            if (this.errorResponse.length !== 0) {
+                this.openSnackBar(this.errorResponse);
+            } else {
+                this.name = '';
+                this.guess = null;
+                this.mail = '';
+                this.guessGummy = null;
+                this.guessMAndM = null;
+            }
+        });
     }
 
     openSnackBar(message: string) {

@@ -15,7 +15,6 @@ export class RestService {
     }
 
     addGuess(person: Person) {
-        console.log('hi\nAdded a person: ' + person);
         return this.http.post('http://localhost:8080/tdot/addGuess', person);
     }
 
